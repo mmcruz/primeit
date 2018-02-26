@@ -12,12 +12,17 @@ public class DBCommand extends MySQLDBConnection{
 	
 	public DBCommand(){
 		try {
-			new MySQLDBConnection();
+			open();
 			System.out.println(this.instance);
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		finally{
+			close();
+		}
 	}
+
+	
 	
 }

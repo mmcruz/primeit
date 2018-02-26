@@ -14,22 +14,24 @@ public class MySQLDBConnection {
     private String userName = "root";
     private String password = "admin";
 
-    public MySQLDBConnection() throws SQLException {
+    public MySQLDBConnection() {
+    }
+
+	public void open() throws SQLException{
         try {
-			this.open();
+			Class.forName("com.mysql.jdbc.Driver");
+			this.url += this.hostName + ":3306" + this.dbName;
+			this.instance = DriverManager.getConnection(this.url, this.userName, this.password);		
         } 
 		catch (ClassNotFoundException e) {
             System.out.println("Database Connection Creation Failed : " + e.getMessage());
         }
-    }
-
-	public void open(){
-		Class.forName("com.mysql.jdbc.Driver");
-		this.url += this.hostName + ":3306" + this.dbName;
-		this.instance = DriverManager.getConnection(this.url, this.userName, this.password);		
 	}
 	
 	public void close(){
+		if (this.connection){
+			this.close();
+		}
 		this.connection = null;
 	}
 	
